@@ -1,8 +1,26 @@
 /* I should write a program to automatically add .jsx and .module.css when I make a component folder. */
 
 .formContainer {
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark grey background */
-    padding: 20px;
-    border-radius: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+  margin: 20px;
+  background-color: rgba(45, 95, 187, 0.5);
+  padding: 80px;
+  border-radius: 20px;
+}
+
+.musicTable {
+  border-collapse: collapse;
+}
+
+.musicTable th, .musicTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.musicTable th {
+  background-color: #9daf4c;
+  color: white;
+}

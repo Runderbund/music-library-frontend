@@ -1,6 +1,9 @@
 .formContainer {
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark grey background */
-    padding: 20px;
-    border-radius: 20px;
-  }
-  
+  background-color: rgba(45, 95, 187, 0.5);
+  padding: 80px;
+  border-radius: 20px;
+}
+.formContainer label {
+  margin-right: 20px;
+}
+

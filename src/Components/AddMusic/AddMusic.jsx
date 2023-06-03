@@ -15,7 +15,6 @@ function AddMusic() {
   return (
     <div className={styles.formContainer}>
       <label htmlFor="titleInput">Title:</label>
-      <br />
       <input
         id="titleInput"
         type="text"
@@ -25,7 +24,6 @@ function AddMusic() {
       <br />
 
       <label htmlFor="artistInput">Artist:</label>
-      <br />
       <input
         id="artistInput"
         type="text"
@@ -35,7 +33,6 @@ function AddMusic() {
       <br />
 
       <label htmlFor="albumInput">Album:</label>
-      <br />
       <input
         id="albumInput"
         type="text"
@@ -45,7 +42,6 @@ function AddMusic() {
       <br />
 
       <label htmlFor="releaseDateInput">Release Date:</label>
-      <br />
       <input
         id="releaseDateInput"
         type="date"
@@ -55,7 +51,6 @@ function AddMusic() {
       <br />
 
       <label htmlFor="genreInput">Genre:</label>
-      <br />
       <input
         id="genreInput"
         type="text"
