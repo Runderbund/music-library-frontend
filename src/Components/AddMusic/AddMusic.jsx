@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styles from "./AddMusic.module.css";
 
 function AddMusic() {
+  // Mostly passed these in rather than setting in each component last time.
+  // Added a lot of needless passing of props. Trying differently here.
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [album, setAlbum] = useState("");
@@ -10,6 +13,25 @@ function AddMusic() {
 
   const handleInputChange = (event, setStateFunc) => {
     setStateFunc(event.target.value);
+  };
+
+  const addMusic = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/music/create/",
+        {
+          title: title,
+          artist: artist,
+          album: album,
+          release_date: releaseDate,
+          genre: genre,
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      // Error catching not asked for, but always good.
+      console.error("There was an error!", error);
+    }
   };
 
   return (
@@ -57,6 +79,9 @@ function AddMusic() {
         value={genre}
         onChange={(event) => handleInputChange(event, setGenre)}
       />
+      <br />
+
+      <button className={styles.submitButton}>Add Music</button>
     </div>
   );
 }
