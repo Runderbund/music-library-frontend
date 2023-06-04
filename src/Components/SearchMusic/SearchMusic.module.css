@@ -24,3 +24,10 @@
   background-color: #9daf4c;
   color: white;
 }
+
+.searchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
