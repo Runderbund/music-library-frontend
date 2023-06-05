@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "./AddMusic.module.css";
 
-function AddMusic() {
+function AddMusic( {setMusicData}) {
   // Mostly passed these in rather than setting in each component last time.
   // Added a lot of needless passing of props. Trying differently here.
   const [title, setTitle] = useState("");
@@ -17,7 +17,7 @@ function AddMusic() {
 
   const addMusic = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:8000/api/music/create/",
         {
           title: title,
@@ -27,9 +27,11 @@ function AddMusic() {
           genre: genre,
         }
       );
-      console.log(response.data);
-    } catch (error) {
-      // Error catching not asked for, but always good.
+      // Fetch the data again after a song is added
+      const response = await axios.get("http://localhost:8000/api/music/");
+      setMusicData(response.data);
+    } catch (error) { // Error catching not asked for, but always good.
+
       console.error("There was an error!", error);
     }
   };
@@ -81,7 +83,7 @@ function AddMusic() {
       />
       <br />
 
-      <button className={styles.submitButton}>Add Music</button>
+      <button className={styles.submitButton} onClick={addMusic}>Add Music</button>
     </div>
   );
 }

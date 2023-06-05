@@ -1,25 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import styles from "./SearchMusic.module.css";
 
-function SearchMusic() {
+function SearchMusic({ musicData }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
-  const [musicData, setMusicData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/music/");
-        setMusicData(response.data);
-      } catch (error) {
-        console.error("There was an error!", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -52,7 +38,6 @@ function SearchMusic() {
         case "Genre":
           searchString = song.genre.toLowerCase();
           break;
-        
       }
       return searchString.includes(searchTerm.toLowerCase());
     });
@@ -90,7 +75,6 @@ function SearchMusic() {
       <table className={styles.musicTable}>
         <thead>
           <tr>
-            {/* Replace these with sorting buttons */}
             <th>Title</th>
             <th>Artist</th>
             <th>Album</th>
@@ -101,8 +85,6 @@ function SearchMusic() {
           </tr>
         </thead>
         <tbody>
-          {/* Ternary operation - {musicData.length > 0 ? (map music) : ("No data yet"}
-        Hard to read when spaced out like below. */}
           {musicData.length > 0 ? (
             musicData.map((song) => (
               <tr key={song.id}>
@@ -111,14 +93,13 @@ function SearchMusic() {
                 <td>{song.album}</td>
                 <td>{song.release_date}</td>
                 <td>{song.genre}</td>
-                <td>Edit</td> {/* Change after making buttons */}
+                <td>Edit</td>
                 <td>Delete</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="7">No data yet</td>{" "}
-              {/* Change after making buttons */}
+              <td colSpan="7">No data yet</td>
             </tr>
           )}
         </tbody>
