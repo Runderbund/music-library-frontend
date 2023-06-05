@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import styles from './EditMusic.module.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import styles from "./EditMusic.module.css";
 
+/**
+ * A component that allows the user to edit existing music.
+ * @param {Object} songToEdit - The song to be edited.
+ * @param {function} setSongToEdit - The setter function for the song to edit.
+ * @param {function} setMusicData - The setter function for the music data.
+ * @returns {JSX.Element|null}
+ */
 function EditMusic({ songToEdit, setSongToEdit, setMusicData }) {
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
@@ -9,9 +16,11 @@ function EditMusic({ songToEdit, setSongToEdit, setMusicData }) {
   const [releaseDate, setReleaseDate] = useState("");
   const [genre, setGenre] = useState("");
 
-  // Fills the modal form with the song data whenever songToEdit is updated
+  /**
+   * Fills the popup modal form with the song data whenever songToEdit is updated.
+   */
   useEffect(() => {
-    if(songToEdit) {
+    if (songToEdit) {
       setTitle(songToEdit.title);
       setArtist(songToEdit.artist);
       setAlbum(songToEdit.album);
@@ -20,14 +29,22 @@ function EditMusic({ songToEdit, setSongToEdit, setMusicData }) {
     }
   }, [songToEdit]);
 
+  /**
+   * A handler for input changes.
+   * @param {Event} event - The input change event.
+   * @param {function} setStateFunc - The setter function for the input state.
+   */
   const handleInputChange = (event, setStateFunc) => {
     setStateFunc(event.target.value);
   };
 
+  /**
+   * A function for updating the music data.
+   */
   const updateMusic = async () => {
-    if(songToEdit) {
+    if (songToEdit) {
       try {
-        console.log(songToEdit)
+        console.log(songToEdit);
         await axios.put(`http://localhost:8000/api/music/${songToEdit.id}/`, {
           title: title,
           artist: artist,
@@ -38,19 +55,22 @@ function EditMusic({ songToEdit, setSongToEdit, setMusicData }) {
         // Fetch the data again after a song is updated
         const response = await axios.get("http://localhost:8000/api/music/");
         setMusicData(response.data);
-        setSongToEdit(null); // Close the modal
+        setSongToEdit(null);
       } catch (error) {
         console.error("There was an error!", error);
       }
     }
   };
 
-  // Only render the modal if there's a song to edit
-  if(songToEdit) {
+  // Only makes the modal popup if there's a song to edit
+  if (songToEdit) {
     return (
       <div className={styles.modal}>
         <div className={styles.modalContent}>
-          <span className={styles.close} onClick={() => setSongToEdit(null)}>&times;</span>
+          <span
+            className={styles.close}
+            onClick={() => setSongToEdit(null)}
+          ></span>
           <label htmlFor="titleInput">Title:</label>
           <input
             id="titleInput"
@@ -92,7 +112,9 @@ function EditMusic({ songToEdit, setSongToEdit, setMusicData }) {
           />
           <br />
           <button onClick={updateMusic}>Update Music</button>
-          <button onClick={() => setSongToEdit(null)}>Cancel</button>
+          <br />
+          <button onClick={() => setSongToEdit(null)}>Cancel</button>{" "}
+          {/* Closes the modal by making if(songToEdit) == false */}
         </div>
       </div>
     );

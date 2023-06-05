@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./Header.module.css";
 
-
+/**
+ * A component that renders the header of the application.
+ * @returns {React.JSX.Element}
+ */
 const Header = () => {
   return (
     <div className={styles.header}>

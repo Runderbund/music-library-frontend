@@ -1,5 +1,5 @@
 .header {
-  background-color: #f9f8d6;
+  background-color: #ffac2f;
   position: fixed;
   width: 100%;
   height: 3em;
@@ -13,8 +13,8 @@
   font-size: 2em;
 }
 
-/* For the smaller, gray middle word */
+/* For the smaller, blue middle word */
 .titleSub {
   font-size: 0.9em;
-  color: gray;
+  color: rgb(39, 110, 218);
 }

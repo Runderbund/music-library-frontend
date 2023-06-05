@@ -1,28 +1,12 @@
-.app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #808080;
-  height: 100vh;
-}
-
 .main {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  flex-wrap: wrap; /* Allow the rectangles to wrap to the next line if the screen is too narrow */
-  padding-top: 3em; /* Push content below the fixed header */
+  flex-wrap: wrap; /* Allows SearchMusic to drop below if the screen narrows too much */
   flex-grow: 1;
-
-}
-
-.rectangle {
-  width: 200px;
-  height: 100px;
-  background-color: #ffffff;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-image: url("./Background.jpg"); /* Generated with Leonardo AI */
+  /* background-image: url("./Background2.jpg");
+  background-size: cover; */ /* The alternative background looks better with cover than tiled */
+  height: 100vh;
 }

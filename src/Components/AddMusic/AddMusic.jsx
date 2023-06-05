@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "./AddMusic.module.css";
 
-function AddMusic( {setMusicData}) {
-  // Mostly passed these in rather than setting in each component last time.
+/**
+ * A component that allows the user to add new music.
+ * @param {function} setMusicData - The setter function for the music data.
+ * @returns {React.JSX.Element}
+ */
+function AddMusic({ setMusicData }) {
+  // Mostly passed these from App.JS rather than setting them in each component last time.
   // Added a lot of needless passing of props. Trying differently here.
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
@@ -11,27 +16,31 @@ function AddMusic( {setMusicData}) {
   const [releaseDate, setReleaseDate] = useState("");
   const [genre, setGenre] = useState("");
 
+  /**
+   * A handler for input changes.
+   * @param {Event} event - The input change event.
+   * @param {function} setStateFunc - The setter function for the input state (Title, Artist, etc.).
+   */
   const handleInputChange = (event, setStateFunc) => {
     setStateFunc(event.target.value);
   };
 
+  /**
+   * A function for adding new music.
+   */
   const addMusic = async () => {
     try {
-      await axios.post(
-        "http://localhost:8000/api/music/create/",
-        {
-          title: title,
-          artist: artist,
-          album: album,
-          release_date: releaseDate,
-          genre: genre,
-        }
-      );
-      // Fetch the data again after a song is added
+      await axios.post("http://localhost:8000/api/music/create/", {
+        title: title,
+        artist: artist,
+        album: album,
+        release_date: releaseDate,
+        genre: genre,
+      });
+      // Fetches data again after a song is added. Updates music table.
       const response = await axios.get("http://localhost:8000/api/music/");
       setMusicData(response.data);
-    } catch (error) { // Error catching not asked for, but always good.
-
+    } catch (error) {
       console.error("There was an error!", error);
     }
   };
@@ -83,7 +92,9 @@ function AddMusic( {setMusicData}) {
       />
       <br />
 
-      <button className={styles.submitButton} onClick={addMusic}>Add Music</button>
+      <button className={styles.submitButton} onClick={addMusic}>
+        Add Music
+      </button>
     </div>
   );
 }

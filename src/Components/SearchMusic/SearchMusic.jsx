@@ -3,22 +3,63 @@ import EditMusic from "../EditMusic/EditMusic";
 import axios from "axios";
 import styles from "./SearchMusic.module.css";
 
+/**
+ * A component that handles search, filter and sorting of music data.
+ * @param {Array} musicData - The array of music data.
+ * @param {function} setMusicData - The setter function for the music data.
+ * @returns {React.JSX.Element}
+ */
 function SearchMusic({ musicData, setMusicData }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [filteredData, setFilteredData] = useState([]);
   const [songToEdit, setSongToEdit] = useState(null);
+  const [sortConfig, setSortConfig] = useState({
+    key: "title",
+    direction: "ascending",
+  }); // Default sorting is by Song Title
 
+  /**
+   * A handler for updating the search term.
+   * @param {Event} event - The input change event.
+   */
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  /**
+   * A handler for updating the filter category.
+   * @param {Event} event - The select change event.
+   */
   const handleFilterChange = (event) => {
     setFilterCategory(event.target.value);
   };
 
+  /**
+   * A function for updating the sorting configuration.
+   * @param {string} key - The key for sorting (Title, Artist, Album, Release Date, Genre)
+   */
+  const sortData = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
   useEffect(() => {
-    let filtered = musicData.filter((song) => {
+    let sortedData = [...musicData]; // Makes shallow array copy, leaves musicData untouched
+    sortedData.sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === "ascending" ? -1 : 1; // checks if sort direction is ascending or descending
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+
+    let filtered = sortedData.filter((song) => {
       let searchString = "";
       switch (filterCategory) {
         case "All":
@@ -44,7 +85,7 @@ function SearchMusic({ musicData, setMusicData }) {
       return searchString.includes(searchTerm.toLowerCase());
     });
     setFilteredData(filtered);
-  }, [searchTerm, filterCategory, musicData]);
+  }, [searchTerm, filterCategory, sortConfig, musicData]);
 
   const handleEdit = (song) => {
     setSongToEdit(song);
@@ -92,19 +133,21 @@ function SearchMusic({ musicData, setMusicData }) {
 
       <div className={styles.tableWrapper}>
         <table className={styles.musicTable}>
-          {/* Could add colgroup to keep widths constant. */}
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Artist</th>
-              <th>Album</th>
-              <th>Release Date</th>
-              <th>Genre</th>
+              <th onClick={() => sortData("title")}>Title</th>{" "}
+              {/* Sorts/reverses sort on button click. Needs a visual cue to make this obvious. */}
+              <th onClick={() => sortData("artist")}>Artist</th>
+              <th onClick={() => sortData("album")}>Album</th>
+              <th onClick={() => sortData("release_date")}>Release Date</th>
+              <th onClick={() => sortData("genre")}>Genre</th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
+            {/* Ternary operation - {filteredData.length > 0 ? (map music) : ("No Data Found"}
+                Hard to read when spaced out like below. */}
             {filteredData.length > 0 ? (
               filteredData.map((song) => (
                 <tr key={song.id}>
