@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditMusic from '../EditMusic/EditMusic';
 import axios from "axios";
 import styles from "./SearchMusic.module.css";
@@ -51,6 +51,11 @@ function SearchMusic({ musicData, setMusicData }) {
     setSongToEdit(song);
   };
 
+  useEffect(() => {
+    setFilteredData(musicData);
+  }, [musicData]);
+  
+
   const handleDelete = async (id) => {
     // Add confirm later
       try {
@@ -101,13 +106,11 @@ function SearchMusic({ musicData, setMusicData }) {
               <th>Album</th>
               <th>Release Date</th>
               <th>Genre</th>
-              <th></th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
-            {musicData.length > 0 ? (
-              musicData.map((song) => (
+            {filteredData.length > 0 ? (
+              filteredData.map((song) => (
                 <tr key={song.id}>
                   <td>{song.title}</td>
                   <td>{song.artist}</td>
@@ -120,7 +123,7 @@ function SearchMusic({ musicData, setMusicData }) {
               ))
             ) : (
               <tr>
-                <td colSpan="7">No data yet</td>
+                <td colSpan="7">No data found</td>
               </tr>
             )}
           </tbody>

@@ -21,7 +21,7 @@
 }
 
 .musicTable th {
-  background-color: #9daf4c;
+  background-color: #274cc5;
   color: white;
 }
 
@@ -34,6 +34,7 @@
 
 .music-container {
   display: flex;
+  
 }
 
 .button-container {
