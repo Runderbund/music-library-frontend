@@ -31,3 +31,18 @@
   align-items: center;
   gap: 1rem;
 }
+
+.music-container {
+  display: flex;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+}

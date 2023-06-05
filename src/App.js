@@ -26,7 +26,7 @@ function App() {
       <Header />
       <div className={styles.main}>
         <AddMusic setMusicData={setMusicData} />
-        <SearchMusic musicData={musicData} />
+        <SearchMusic musicData={musicData} setMusicData={setMusicData} />
       </div>
     </div>
   );
