@@ -1,5 +1,3 @@
-/* I should write a program to automatically add .jsx and .module.css when I make a component folder. */
-
 .formContainer {
   display: flex;
   flex-direction: column;
@@ -9,21 +7,29 @@
   background-color: rgba(45, 95, 187, 0.5);
   padding: 80px;
   border-radius: 20px;
+  width: 600px;
 }
 
 .musicTable {
   border-collapse: collapse;
+  width: 100%;
 }
 
 .musicTable th, .musicTable td {
-  border: 1px solid #ddd;
   padding: 8px;
+  text-align: center;
 }
 
 .musicTable th {
   background-color: #274cc5;
   color: white;
 }
+
+.musicTable th:nth-child(6),
+.musicTable th:nth-child(7) {
+  background-color: transparent;
+}
+
 
 .searchContainer {
   display: flex;
@@ -32,9 +38,10 @@
   gap: 1rem;
 }
 
-.music-container {
-  display: flex;
-  
+.tableWrapper {
+  height: 235px; /* Fits 5 rows */
+  overflow-y: auto; /* Makes a scrollbar after 5 rows */
+
 }
 
 .button-container {
@@ -46,4 +53,8 @@
 .button-row {
   display: flex;
   gap: 10px;
+}
+
+.noData {
+  text-align: center;
 }
