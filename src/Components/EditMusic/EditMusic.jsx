@@ -27,6 +27,7 @@ function EditMusic({ songToEdit, setSongToEdit, setMusicData }) {
   const updateMusic = async () => {
     if(songToEdit) {
       try {
+        console.log(songToEdit)
         await axios.put(`http://localhost:8000/api/music/update/${songToEdit.id}`, {
           title: title,
           artist: artist,

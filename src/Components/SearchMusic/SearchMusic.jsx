@@ -55,7 +55,7 @@ function SearchMusic({ musicData, setMusicData }) {
     // Add confirm later
       try {
         // Delete the song and update the song list
-        await axios.delete(`http://localhost:8000/api/music/delete/${id}`); // Incorrect syntax?
+        await axios.delete(`http://localhost:8000/api/music/${id}/`);
         const response = await axios.get("http://localhost:8000/api/music/");
         setMusicData(response.data);
       } catch (error) {
