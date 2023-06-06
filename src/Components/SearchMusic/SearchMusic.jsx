@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import EditMusic from "../EditMusic/EditMusic";
 import axios from "axios";
 import styles from "./SearchMusic.module.css";
+// import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+// import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+// Wanted to use these icons to indicate sorting, but they don't work with React 18.
 
 /**
  * A component that handles search, filter and sorting of music data.
@@ -14,10 +17,11 @@ function SearchMusic({ musicData, setMusicData }) {
   const [filterCategory, setFilterCategory] = useState("All");
   const [filteredData, setFilteredData] = useState([]);
   const [songToEdit, setSongToEdit] = useState(null);
-  const [sortConfig, setSortConfig] = useState({
-    key: "title",
-    direction: "ascending",
-  }); // Default sorting is by Song Title
+  const [sortConfig, setSortConfig] = useState({key: "title", direction: "ascending",});
+  // Default sorting is by Song Title
+  const [isDateFilterActive, setDateFilterActive] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   /**
    * A handler for updating the search term.
@@ -82,10 +86,24 @@ function SearchMusic({ musicData, setMusicData }) {
           searchString = song.genre.toLowerCase();
           break;
       }
+      if (isDateFilterActive) {
+        const songDate = new Date(song.release_date);
+        if (startDate && songDate < new Date(startDate)) return false;
+        if (endDate && songDate > new Date(endDate)) return false;
+      }
+
       return searchString.includes(searchTerm.toLowerCase());
     });
     setFilteredData(filtered);
-  }, [searchTerm, filterCategory, sortConfig, musicData]);
+  }, [
+    searchTerm,
+    filterCategory,
+    sortConfig,
+    musicData,
+    isDateFilterActive,
+    startDate,
+    endDate,
+  ]);
 
   const handleEdit = (song) => {
     setSongToEdit(song);
@@ -129,6 +147,37 @@ function SearchMusic({ musicData, setMusicData }) {
           <option value="Album">Search by Album</option>
           <option value="Genre">Search by Genre</option>
         </select>
+      </div>
+
+      <div className={styles.checkboxContainer}>
+        <label>
+          <input
+            type="checkbox"
+            checked={isDateFilterActive}
+            onChange={() => setDateFilterActive(!isDateFilterActive)}
+          />
+          Filter by Date
+        </label>
+
+        <label>
+          Earliest:
+          <input
+            type="date"
+            value={startDate}
+            onChange={(event) => setStartDate(event.target.value)}
+            disabled={!isDateFilterActive}
+          />
+        </label>
+
+        <label>
+          Latest:
+          <input
+            type="date"
+            value={endDate}
+            onChange={(event) => setEndDate(event.target.value)}
+            disabled={!isDateFilterActive}
+          />
+        </label>
       </div>
 
       <div className={styles.tableWrapper}>

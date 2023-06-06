@@ -42,7 +42,6 @@ function App() {
 
 export default App;
 
-// TODO: SearchMusic - Add filter by release date range. Two date pickers.
 // TODO: SearchMusic - Set static sizes for table columns to avoid resizing.
 // TODO: SearchMusic - Add arrows to table headers to indicate current sorting.
 

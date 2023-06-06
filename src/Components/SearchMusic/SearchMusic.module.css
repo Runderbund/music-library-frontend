@@ -58,3 +58,9 @@
 .noData {
   text-align: center;
 }
+
+.checkboxContainer {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
